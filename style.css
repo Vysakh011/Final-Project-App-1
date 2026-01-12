@@ -1,78 +1,59 @@
-/* General Layout */
+/* ===== BASIC LAYOUT ===== */
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: sans-serif;
   margin: 0;
-  background: #f0f4f8;
-  color: #222;
+  background: #ffffff;
+  color: #000000;
 }
 
 header {
   text-align: center;
-  padding: 30px 15px 15px;
-  background: linear-gradient(135deg, #0077cc, #00b4d8);
-  color: white;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  padding: 20px;
+  border-bottom: 1px solid #000;
 }
 
 header h1 {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   margin: 0;
 }
 
 header .subtitle {
   font-size: 0.9rem;
-  opacity: 0.9;
-  margin-top: 6px;
+  margin-top: 4px;
 }
 
-
-/* Plug Cards */
+/* ===== PLUG CONTAINER ===== */
 .plug-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 20px;
-  padding: 25px;
+  gap: 15px;
+  padding: 20px;
 }
 
+/* ===== PLUG CARD ===== */
 .plug-card {
-  background: white;
-  border-radius: 15px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-  padding: 20px 25px;
-  width: 260px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  border-top: 5px solid #0077cc;
-}
-
-.plug-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+  border: 1px solid #000;
+  padding: 15px;
+  width: 240px;
 }
 
 .plug-card h2 {
-  color: #0077cc;
-  font-size: 1.2rem;
-  margin: 0 0 10px;
+  font-size: 1.1rem;
+  margin: 0 0 10px 0;
 }
 
 .value {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   margin: 4px 0;
 }
 
-.value i {
-  color: #0077cc;
-  margin-right: 6px;
-}
-
-/* Relay Toggle Switch */
+/* ===== TOGGLE SWITCH (BASIC) ===== */
 .switch {
   position: relative;
   display: inline-block;
-  width: 70px;
-  height: 34px;
-  margin: 20px;
+  width: 50px;
+  height: 24px;
 }
 
 .switch input {
@@ -81,100 +62,57 @@ header .subtitle {
 
 .slider {
   position: absolute;
+  inset: 0;
+  border: 1px solid #000;
   cursor: pointer;
-  background-color: #ccc;
-  border-radius: 34px;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  transition: .4s;
 }
 
 .slider:before {
-  position: absolute;
   content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  border-radius: 50%;
-  transition: .4s;
-}
-
-input:checked + .slider {
-  background-color: #0077cc;
+  position: absolute;
+  height: 18px;
+  width: 18px;
+  left: 2px;
+  bottom: 2px;
+  border: 1px solid #000;
+  background: #fff;
 }
 
 input:checked + .slider:before {
-  transform: translateX(36px);
+  transform: translateX(26px);
 }
 
-/* Timer Picker */
+/* ===== TIMER PICKER ===== */
 .timer-picker {
   display: flex;
   justify-content: center;
-  gap: 15px;
-  margin: 20px 0;
+  gap: 10px;
+  margin: 15px 0;
 }
 
 .timer-picker select {
-  padding: 10px;
-  font-size: 1.2rem;
-  border-radius: 10px;
-  border: 2px solid #0077cc;
-  background: white;
-  color: #0077cc;
-  font-weight: 600;
-  width: 80px;
-  text-align: center;
-  appearance: none;
-  overflow-y: scroll;
-}
-
-.timer-picker label {
-  font-size: 0.9rem;
-  color: #0077cc;
-  margin-top: 12px;
-}
-
-/* Buttons */
-.action-btn {
-  padding: 12px 25px;
-  background: #0077cc;
-  color: white;
-  border: none;
-  border-radius: 10px;
+  padding: 5px;
+  border: 1px solid #000;
   font-size: 1rem;
+}
+
+/* ===== BUTTON ===== */
+.action-btn {
+  padding: 8px 16px;
+  border: 1px solid #000;
+  background: #fff;
   cursor: pointer;
-  margin-top: 10px;
-  transition: 0.2s;
 }
 
-.action-btn:hover {
-  background: #005fa3;
-}
-
-/* Total Power */
+/* ===== FOOTER / TOTAL ===== */
 footer {
   text-align: center;
-  margin-bottom: 40px;
+  margin: 20px 0;
 }
 
 .total-card {
   display: inline-block;
-  padding: 14px 28px;
-  background: linear-gradient(135deg, #0077cc, #00b4d8);
-  color: white;
-  border-radius: 12px;
-  font-size: 1.3rem;
-  font-weight: 600;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  padding: 10px 20px;
+  border: 1px solid #000;
+  font-size: 1.1rem;
 }
-
-.total-card i {
-  margin-right: 10px;
-}
-
-
