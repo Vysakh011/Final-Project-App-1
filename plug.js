@@ -3,7 +3,7 @@ const client = mqtt.connect("wss://broker.hivemq.com:8884/mqtt");
 
 client.on("connect", () => {
   console.log("MQTT connected");
-  client.subscribe("smart/plug/data");
+  client.subscribe("smart/plug/codedata");
 });
 
 client.on("message", (topic, message) => {
@@ -67,10 +67,10 @@ function toggleRelay() {
   const status = document.getElementById("relayStatus");
   
   if (toggle.checked) {
-    client.publish("smart/plug/cmd", JSON.stringify({ plug: 1, cmd: "off" }));
+    client.publish("smart/plug/command", JSON.stringify({ plug: 1, cmd: "off" }));
     status.textContent = "Status: OFF";
   } else {
-    client.publish("smart/plug/cmd", JSON.stringify({ plug: 1, cmd: "on" }));
+    client.publish("smart/plug/command", JSON.stringify({ plug: 1, cmd: "on" }));
     status.textContent = "Status: ON";
   }
 }
@@ -82,7 +82,7 @@ function sendTimer() {
   const totalSec = h * 3600 + m * 60 + s;
   
   if (totalSec > 0) {
-    client.publish("smart/plug/cmd", JSON.stringify({ plug: 1, cmd: "timer", seconds: totalSec }));
+    client.publish("smart/plug/command", JSON.stringify({ plug: 1, cmd: "timer", seconds: totalSec }));
     document.getElementById("timerDisplay").textContent = `Timer Started: ${totalSec} sec`;
     
     // ✅ Force toggle ON when timer starts
