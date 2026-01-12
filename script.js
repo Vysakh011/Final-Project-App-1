@@ -3,7 +3,7 @@ const client = mqtt.connect("wss://broker.hivemq.com:8884/mqtt");
 
 client.on("connect", () => {
   console.log("✅ Connected to MQTT broker over WSS");
-  client.subscribe("smart/plug/data");
+  client.subscribe("smart/plug/codedata");
 });
 
 client.on("message", (topic, message) => {
