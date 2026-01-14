@@ -3,32 +3,26 @@ const client = mqtt.connect("wss://broker.hivemq.com:8884/mqtt");
 
 client.on("connect", () => {
   console.log("✅ Connected to MQTT broker over WSS");
-  client.subscribe("smart/plug/codedata");
+  client.subscribe("smart/plug/+/codedata");
 });
 
 client.on("message", (topic, message) => {
   try {
     const data = JSON.parse(message.toString());
 
-    // Accept both formats: nested {data:{...}} or flat {...}
-    const plugData = data.data || data;
+    // Extract plugId from topic: smart/plug/{id}/codedata
+    const parts = topic.split("/");
+    const plugId = parts[2];
 
-    if (
-      plugData.voltage !== undefined &&
-      plugData.current !== undefined &&
-      plugData.relay !== undefined
-    ) {
-      updatePlugUI(data.plug, plugData);
-    } else {
-      console.warn("⚠️ Unrecognized message format:", message.toString());
-    }
+    updatePlugUI(plugId, data);
+
   } catch (err) {
     console.error("❌ Error parsing message:", err);
   }
 });
 
-// Example UI update function
-// ✅ Keep track of all plug powers
+// ================= UI UPDATE =================
+
 // ✅ Keep track of all plug powers
 const plugPowers = {};
 let totalUpdateTimer = null;
@@ -71,9 +65,11 @@ function updatePlugUI(plugId, plugData) {
       const totalPower = Object.values(plugPowers)
         .reduce((sum, p) => sum + p, 0)
         .toFixed(2);
-      totalCard.innerHTML = `<i class="bi bi-graph-up-arrow"></i> Total Power: ${totalPower} W`;
 
-      totalUpdateTimer = null; // reset timer
+      totalCard.innerHTML =
+        `<i class="bi bi-graph-up-arrow"></i> Total Power: ${totalPower} W`;
+
+      totalUpdateTimer = null;
     }, 1000);
   }
 }
