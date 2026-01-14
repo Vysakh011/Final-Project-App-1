@@ -5,7 +5,7 @@ const client = mqtt.connect("wss://broker.hivemq.com:8884/mqtt");
 
 // ✅ Get plugId from URL (e.g. plug.html?plug=2)
 const params = new URLSearchParams(window.location.search);
-const plugId = params.get("plug");
+const plugId = parseInt(params.get("plug"), 10);
 
 client.on("connect", () => {
   console.log("MQTT connected");
