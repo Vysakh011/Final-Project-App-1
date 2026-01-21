@@ -1,5 +1,4 @@
 // plug.js
-
 // ✅ Use secure WebSocket (WSS) since site is HTTPS
 const client = mqtt.connect("wss://broker.hivemq.com:8884/mqtt");
 
@@ -9,8 +8,7 @@ const plugId = parseInt(params.get("plug"), 10);
 
 client.on("connect", () => {
   console.log("MQTT connected");
-
-  // ✅ Subscribe ONLY to this plug’s data
+  // ✅ Subscribe ONLY to this plug's data
   client.subscribe(`smart/plug/${plugId}/codedata`);
   console.log(`Subscribed to smart/plug/${plugId}/codedata`);
 });
@@ -18,7 +16,7 @@ client.on("connect", () => {
 client.on("message", (topic, message) => {
   const msg = message.toString();
   console.log("MQTT DATA:", msg);
-
+  
   // ✅ Parse JSON payload from hub
   let data;
   try {
@@ -48,14 +46,13 @@ client.on("message", (topic, message) => {
     </div>
   `;
 
-  // ✅ Sync toggle with relay state
+  // ✅ FIXED: Sync toggle with relay state correctly
   const toggle = document.getElementById("relayToggle");
   const status = document.getElementById("relayStatus");
-
-  if (relay === 0) {
+  if (relay === 1) {  // relay = 1 means ON
     toggle.checked = true;
     status.textContent = "Status: ON";
-  } else {
+  } else {  // relay = 0 means OFF
     toggle.checked = false;
     status.textContent = "Status: OFF";
   }
@@ -70,23 +67,23 @@ client.on("message", (topic, message) => {
 });
 
 // ================= CONTROL FUNCTIONS =================
-
 function toggleRelay() {
   const toggle = document.getElementById("relayToggle");
   const status = document.getElementById("relayStatus");
-
+  
+  // ✅ FIXED: Correct logic - checked = ON, unchecked = OFF
   if (toggle.checked) {
-    client.publish(
-      "smart/plug/command",
-      JSON.stringify({ plug: plugId, cmd: "off" })
-    );
-    status.textContent = "Status: OFF";
-  } else {
     client.publish(
       "smart/plug/command",
       JSON.stringify({ plug: plugId, cmd: "on" })
     );
     status.textContent = "Status: ON";
+  } else {
+    client.publish(
+      "smart/plug/command",
+      JSON.stringify({ plug: plugId, cmd: "off" })
+    );
+    status.textContent = "Status: OFF";
   }
 }
 
@@ -101,10 +98,9 @@ function sendTimer() {
       "smart/plug/command",
       JSON.stringify({ plug: plugId, cmd: "timer", seconds: totalSec })
     );
-
     document.getElementById("timerDisplay").textContent =
       `Timer Started: ${totalSec} sec`;
-
+    
     // ✅ Force toggle ON when timer starts
     const toggle = document.getElementById("relayToggle");
     toggle.checked = true;
