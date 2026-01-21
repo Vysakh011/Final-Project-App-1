@@ -101,9 +101,9 @@ function sendTimer() {
     document.getElementById("timerDisplay").textContent =
       `Timer Started: ${totalSec} sec`;
     
-    // ✅ Force toggle ON when timer starts
+    // ✅ FIXED: Force toggle OFF when timer starts (relay turns OFF during countdown)
     const toggle = document.getElementById("relayToggle");
-    toggle.checked = true;
-    document.getElementById("relayStatus").textContent = "Status: ON";
+    toggle.checked = false;
+    document.getElementById("relayStatus").textContent = "Status: OFF";
   }
 }
